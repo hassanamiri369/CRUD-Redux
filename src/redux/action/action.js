@@ -1,13 +1,10 @@
-import {GET_DETAILS , POST_DETAILS} from "../type"
+import {GET_DETAILS , POST_DETAILS , UPDATE_DETAILS ,  DELETE_TYPES} from "../type"
 
-// فانکشن هارو اینجا مینویسیم و اینجا استفاده میکنیم 
-// میتونیم اون فانکشن هارو مستقیم تو خود اینجا هم بنویسیم 
-import {GetApiDetails , PostApiDetails} from "../../api/axiosRequest"
+import {GetApiDetails , PostApiDetails ,DeleteApiDetails ,UpdateApiDetails} from "../../api/axiosRequest"
 
 
 const GetApiAction = () =>{
     return (dispatch) => {
-        // این فانکشن میاد گت میزنه و از سرور دیتا رو میگیره و پاس میده به ردیوسر 
         return GetApiDetails()
         .then(res => {
             console.log(res)
@@ -16,15 +13,8 @@ const GetApiAction = () =>{
     }
 }
 
-// این
-// request 
-// همون دیتایی که کاربر اد کرده و میخواهیم بفرستیمش به بک اند 
-const PostApiAction = (request ) =>{
-    // return (dispatch)=> dispatch({type : POST_DETAILS , payload : false})
-    // return (dispatch) => (  PostApiDetails(request)) 
-    //     // داره یه چیزی رو پست میکنه پس داخل پیلود چیزی نباید باشه که میخواهیم بفرستیم به استیت 
-    //     .then( res =>  dispatch({type : POST_DETAILS , payload : ""}) )
 
+const PostApiAction = (request ) =>{
     return function (dispatch) {
         dispatch({type : POST_DETAILS , payload : false});
         return PostApiDetails(request).then((res)=> {
@@ -36,4 +26,29 @@ const PostApiAction = (request ) =>{
 }
 
 
-export {PostApiAction , GetApiAction}
+const UpdateApiAction = ( data ,id ) =>{
+    return function (dispatch) {
+        dispatch({type : UPDATE_DETAILS, payload : false});     
+        return UpdateApiDetails(data , id).then((res)=> {
+            console.log("res",res)
+            dispatch({type : UPDATE_DETAILS , payload : true})
+        })
+      }   
+}
+
+
+const DeleteApiAction = ( id ) =>{
+    return function (dispatch) {
+        dispatch({type : DELETE_TYPES, payload : false});     
+        return DeleteApiDetails( id).then((res)=> {
+            console.log("res",res)
+            dispatch({type : DELETE_TYPES , payload : true})
+        })
+      }
+    
+}
+
+
+
+
+export {PostApiAction , GetApiAction , UpdateApiAction , DeleteApiAction}

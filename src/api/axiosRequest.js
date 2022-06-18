@@ -38,4 +38,37 @@ const PostApiDetails = (data)=>{
 }
 
 
-export {GetApiDetails , PostApiDetails} 
+const GetDetailsById = (id)=>{
+    const headers = {
+        'Content-Type' : 'application/json'
+    }
+    return AxiosRequest(`http://localhost:3000/details/${id}` , 
+    "GET" ,
+     headers ,
+      {} 
+      )
+}
+
+
+const UpdateApiDetails = (data , id) => {
+    const headers = {
+        'Content-Type' : 'application/json'
+    }
+    return AxiosRequest(`http://localhost:3000/details/${id}` ,
+     "PUT" ,
+      headers 
+      , data)
+}
+
+
+const DeleteApiDetails = ( id) => {
+    const headers = {
+        'Content-Type' : 'application/json'
+    }
+    return AxiosRequest(`http://localhost:3000/details/${id}` ,
+     "DELETE" ,
+      headers 
+       )
+}
+
+export {GetApiDetails , PostApiDetails , GetDetailsById , UpdateApiDetails ,DeleteApiDetails} 

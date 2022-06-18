@@ -1,11 +1,17 @@
 import React , {useState} from "react";
 import { PostApiAction } from "../redux/action/action";
-import { useDispatch  } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const Forms = () => {
 
     const dispatch = useDispatch()
+
+
+    const isResponse = useSelector(state => state.reducer.isResponse)
+    console.log(isResponse)
+
+    
     const history = useHistory()
 
     const [name , setName] = useState("")
@@ -30,9 +36,17 @@ const Forms = () => {
         dispatch(PostApiAction(finalData))
         history.push("/")
     }
+
+
+
+
+    if(isResponse){
+      alert("are you sure post? ")
+    }
   return (
     <>
-      <div>
+      <div className="form-container">
+      <div className="form-group-all">
         <form onSubmit={formHandler}>
 
 
@@ -92,7 +106,9 @@ const Forms = () => {
 
           
           <button type="submit" className="btn btn-primary">Submit </button>
+          <button type="submit" className="btn btn-secondary ml-2" onClick={ ()=> history.push("/")}>cancel</button>
         </form>
+      </div>
       </div>
     </>
   );
